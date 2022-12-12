@@ -29,17 +29,18 @@ export class GameComponent implements OnInit {
   }
 
   takeCart() {
-    if (!this.pickCardanimation) {
-      this.currentCard = this.game.stack.pop();
-      this.pickCardanimation = true;
-      this.game.currentPlayer ++;
-      this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
-
-      setTimeout(() => {
-        this.game.playedCards.push(this.currentCard)
-        this.pickCardanimation = false;
-      }, 1000);
-    }
+      if (!this.pickCardanimation && this.game.players.length !== 0) {
+        this.currentCard = this.game.stack.pop();
+        this.pickCardanimation = true;
+        console.log(this.pickCardanimation);
+        this.game.currentPlayer ++;
+        this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
+  
+        setTimeout(() => {
+          this.game.playedCards.push(this.currentCard)
+          this.pickCardanimation = false;
+        }, 1000);
+      }
   }
 
   openDialog(): void {

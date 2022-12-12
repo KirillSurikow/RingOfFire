@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
+import { Game } from 'src/models/game';
 
 @Component({
   selector: 'app-game-info',
@@ -9,6 +10,8 @@ export class GameInfoComponent implements OnChanges {
  title = "";
  description = "";
  @Input() card:string;
+ @Input () game;
+
 
   cardAction = [
     { title: 'Waterfall', description: 'Everyone has to start drinking at the same time. As soon as player 1 stops drinking, player 2 may stop drinking. Player 3 may stop as soon as player 2 stops drinking, and so on.' },
@@ -27,7 +30,10 @@ export class GameInfoComponent implements OnChanges {
   ]
 
   ngOnChanges(){
-    if(this.card){
+    if(this.game.players.length == 0){
+      this.title = 'Please Create a Player';
+      this.description ='Click on the purple button';
+    }else if(this.card){
       let cardNumber = +this.card.split('_')[1];
       this.title = this.cardAction[cardNumber -1].title;
       this.description = this.cardAction[cardNumber -1].description;

@@ -7,15 +7,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./start-screen.component.scss']
 })
 export class StartScreenComponent implements OnInit {
-    constructor(private router:Router){
+    constructor(private router:Router){     // import the router, to navigate
 
     }
 
     ngOnInit(): void {
       
     }
-
+    /**
+     * navigate from startscreen to the game
+     * 
+     */
     newGame(){
-        this.router.navigateByUrl('/game')
+        this.router.navigateByUrl('/game'); 
     }
 }

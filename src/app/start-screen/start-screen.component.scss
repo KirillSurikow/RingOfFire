@@ -25,15 +25,23 @@
        display: flex;
        align-items: center;
        justify-content: center;
+       position: relative;
+
+       div{
+        position: absolute;
+        margin: auto;
+        margin-top: 12px;
+        width: 5;
+        font-size: 23px;
+        font-weight: 600;
+       }
 
        img{
         width: 100%;
-        
-
-        &:hover{
-            filter: brightness(1.75);
-            cursor: pointer;
-        }
        }
+       &:hover{
+        filter: brightness(1.75);
+        cursor: pointer;
+    }
     }
 }
