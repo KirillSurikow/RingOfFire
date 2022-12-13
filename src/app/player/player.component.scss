@@ -23,3 +23,9 @@
     background-color: orange !important;
 }
 
+@media(max-width:1000px){
+    .player{
+        width: 180px;
+    }
+}
+

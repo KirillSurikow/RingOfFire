@@ -74,7 +74,24 @@
     right: 100px;
 }
 
-@media (max-width:1000px){
+@media screen and (max-width:1000px){
+    @keyframes pickCardAnimationRS {
+        0%{
+            transform:scale(1);
+        }
+    
+        40%{
+            transform: scale(1.7);
+        }
+    
+        50%{
+            transform: scale(1.7);
+        } 
+    
+        100%{
+            transform: scale(1.4) translateY(-180px) rotate(-10deg);
+        }
+    }
     .pickCard{
         animation: pickCardAnimationRS 1.25 ease-in-out !important;
     }
@@ -82,22 +99,14 @@
     .playedCard{
         transform: scale(1.4) translateY(-190px) rotate(-10deg);   
     }
-}
 
-@keyframes pickCardAnimationRS {
-    0%{
-        transform:scale(1);
+    .pin-bottom{
+        left: 10px;
+        right: 10px;
     }
 
-    40%{
-        transform: scale(1.7);
-    }
-
-    50%{
-        transform: scale(1.7);
-    }
-
-    100%{
-        transform: scale(1.4) translateY(-180px) rotate(-10deg);
+    .addBtn{
+        bottom: 128px;
     }
 }
+
