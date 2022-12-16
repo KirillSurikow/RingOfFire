@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Game } from 'src/models/game';
-import {MatDialog} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { DialogueAddPlayerComponent } from '../dialogue-add-player/dialogue-add-player.component';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { update } from '@angular/fire/database';
 
 @Component({
   selector: 'app-game',
@@ -10,59 +12,84 @@ import { Router } from '@angular/router';
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
-  pickCardanimation = false;
-  currentCard: string = '';
   game: Game;
-  gameOver:boolean = false;
-  
+  gameOver: boolean = false;
+  gameId: string;
 
 
-  constructor(public dialog: MatDialog, private router:Router) {
+
+  constructor(private route: ActivatedRoute, private firestore: AngularFirestore, public dialog: MatDialog, private router: Router) {
 
   }
 
   ngOnInit(): void {
     this.newGame();
-    console.log(this.game)
+    this.route.params.subscribe((params) => {
+      this.gameId = params['gameId'];
+      this
+        .firestore
+        .collection('games')
+        .doc(this.gameId)
+        .valueChanges()
+        .subscribe((game: any) => {
+          this.game.currentPlayer = game.currentPlayer;
+          this.game.stack = game.stack;
+          this.game.playedCards = game.playedCards;
+          this.game.players = game.players;
+          this.game.currentCard = game.currentCard;
+          this.game.pickCardanimation = game.pickCardanimation;
+        })
+    });
   }
 
   newGame() {
     this.game = new Game();
+
   }
 
   takeCart() {
-      if (!this.pickCardanimation && this.game.players.length !== 0) {
-        this.currentCard = this.game.stack.pop();
-        this.pickCardanimation = true;
-        console.log(this.pickCardanimation);
-        this.game.currentPlayer ++;
-        this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
-        
-        setTimeout(() => {
-          this.game.playedCards.push(this.currentCard)
-          this.pickCardanimation = false;
-          this.checkGameOver();
-        }, 1000);
-      }
+    if (!this.game.pickCardanimation && this.game.players.length !== 0) {
+      this.game.currentCard = this.game.stack.pop();
+      this.game.pickCardanimation = true;
+      this.game.currentPlayer++;
+      this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
+      this.updateGame();
+
+      setTimeout(() => {
+        this.game.playedCards.push(this.game.currentCard)
+        this.game.pickCardanimation = false;
+        this.checkGameOver();
+        this.updateGame();
+      }, 1000);
+    }
   }
 
-  checkGameOver(){
-    if(this.game.playedCards.length == 52){
+  checkGameOver() {
+    if (this.game.playedCards.length == 52) {
       this.gameOver = true;
     }
   }
 
-  return(){
-    this.router.navigateByUrl('/'); 
+  return() {
+    this.router.navigateByUrl('/');
   }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogueAddPlayerComponent);// mit open() öffnent man einen Dialog Komponente
 
     dialogRef.afterClosed().subscribe(name => {
-      if(name && name.length > 0){
-        this.game.players.push(name)
+      if (name && name.length > 0) {
+        this.game.players.push(name);
+        this.updateGame();
       }
     });
+  }
+
+  updateGame() {
+    this
+    .firestore
+    .collection('games')
+    .doc(this.gameId)
+    .update(this.game.toJSON())
   }
 }

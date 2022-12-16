@@ -4,18 +4,18 @@
 <div class="gameField">
     <div *ngIf="!gameOver" class="cardStack">
         <img [ngStyle]="{'right.px' : i * 5}" *ngFor="let c of [0, 1, 2, 3, 4]; let i = index;" 
-        src="./../../assets/img/cards/card_cover.png">
+        src="assets/img/cards/card_cover.png">
         <img (click)="takeCart()"  class="topCard" style="right: 25px;" 
-        src="./../../assets/img/cards/card_cover.png">
-        <img *ngFor="let card of game.playedCards" class="playedCard" src="./../../assets/img/cards/{{ card }}.png" alt="">
-        <img (click)="takeCart()" *ngIf="pickCardanimation" [class.pickCard]="pickCardanimation" class="pickCard" style="right: 25px;" 
-        src="./../../assets/img/cards/{{ currentCard }}.png">
+        src="assets/img/cards/card_cover.png">
+        <img *ngFor="let card of game.playedCards" class="playedCard" src="assets/img/cards/{{ card }}.png" alt="">
+        <img (click)="takeCart()" *ngIf="game.pickCardanimation" [class.pickCard]="pickCardanimation" class="pickCard" style="right: 25px;" 
+        src="assets/img/cards/{{ game.currentCard }}.png">
     </div>
     <button *ngIf="gameOver" mat-fab color="primary" (click)="return()">
         <mat-icon>refresh</mat-icon>
     </button>
 </div>
-<app-game-info [players]="game.players" [card]="currentCard" [gameEnded]="gameOver" class="pin-bottom"></app-game-info>
+<app-game-info [players]="game.players" [card]="game.currentCard" [gameEnded]="gameOver" class="pin-bottom"></app-game-info>
 
 <button mat-fab color="primary" class="addBtn" (click)="openDialog()">
     <mat-icon>add</mat-icon>
