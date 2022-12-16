@@ -11,6 +11,7 @@ export class GameInfoComponent implements OnChanges {
  description = "";
  @Input() card:string;
  @Input() players:string;
+ @Input() gameEnded=false;
  game: Game;
 
   cardAction = [

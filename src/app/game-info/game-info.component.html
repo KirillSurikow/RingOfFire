@@ -1,8 +1,10 @@
 <mat-card>
     <!-- so sieht eine if else Abfrage aus. Wenn eine Karte vorhanden ist, zeige den Titel an -->
-    <mat-card-title *ngIf="this.players.length > 0">{{ card ? title : 'Please Pick a Card' }}</mat-card-title> 
-    <mat-card-title *ngIf="this.players.length == 0">'Please Create A Player'</mat-card-title> 
-    <mat-card-content *ngIf="this.players.length > 0">{{ card ? description : 'Click on the Card Stack' }}</mat-card-content>
-    <mat-card-content *ngIf="this.players.length == 0">'Click on the purple button'</mat-card-content>
+    <mat-card-title *ngIf="this.players.length > 0 && !this.gameEnded">{{ card ? title : 'Please Pick a Card' }}</mat-card-title> 
+    <mat-card-title *ngIf="this.players.length == 0">Please Create A Player</mat-card-title> 
+    <mat-card-title *ngIf="this.gameEnded">Return to the start screen</mat-card-title> 
+    <mat-card-content *ngIf="this.players.length > 0 && !this.gameEnded">{{ card ? description : 'Click on the Card Stack' }}</mat-card-content>
+    <mat-card-content *ngIf="this.players.length == 0">Click on the purple button</mat-card-content>
+    <mat-card-content *ngIf="this.gameEnded">Click on the purple refresh button</mat-card-content>
   </mat-card>
   
