@@ -1,14 +1,14 @@
 {
   "targets": {
-    "ring-of-fire-b8278": {
+    "ring-of-fire-53f0e": {
       "hosting": {
         "ringOfFire": [
-          "ring-of-fire-b8278"
+          "ring-of-fire-53f0e"
         ]
       }
     }
   },
   "projects": {
-    "default": "ring-of-fire-b8278"
+    "default": "ring-of-fire-53f0e"
   }
 }
